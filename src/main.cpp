@@ -3,17 +3,26 @@
 #include <engine.h>
 #include <ball.h>
 #include <vector>
+#include <chrono>
+#include <iostream>
 
 int main(int argc, char *argv[])
 {
     // Init new engine window
     Engine engine("Physics Engine", 1200, 600);
+    std::vector<Ball> balls; // init vector to hold balls in
 
-    std::vector<Ball> balls;
+    auto lastTime = std::chrono::high_resolution_clock::now();
 
     // start loop for window looping
     while (engine.isWindowRunning())
     {
+
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        double deltaT = std::chrono::duration<double>(currentTime - lastTime).count();
+
+        lastTime = currentTime;
+
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
@@ -37,8 +46,9 @@ int main(int argc, char *argv[])
         engine.clear();
 
         // Render all balls
-        for (const auto &ball : balls)
+        for (auto &ball : balls)
         {
+            ball.updatePosition(deltaT);
             ball.renderBall(engine.getRenderer());
         }
 
