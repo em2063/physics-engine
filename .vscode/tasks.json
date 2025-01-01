@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "Build SDL2 Project",
+            "command": "C:\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-g",
+                "C:/Users/ethan/Desktop/Projects/physics-engine/src/main.cpp",
+                "C:/Users/ethan/Desktop/Projects/physics-engine/src/engine.cpp",
+                "C:/Users/ethan/Desktop/Projects/physics-engine/src/ball.cpp",
+                "-o", "C:/Users/ethan/Desktop/Projects/physics-engine/SDL2/bin/main.exe",
+                "-IC:/Users/ethan/Desktop/Projects/physics-engine/SDL2/include/SDL2",
+                "-IC:/Users/ethan/Desktop/Projects/physics-engine/include",
+                "-LC:/Users/ethan/Desktop/Projects/physics-engine/SDL2/lib",
+                "-lmingw32",
+                "-lSDL2main",
+                "-lSDL2",
+                "-mwindows"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "detail": "Build SDL2 project with GCC"
+        }
+    ]
+}
