@@ -1,4 +1,5 @@
 #include "ball.h"
+#include <cmath>
 
 const double GRAVITY = 650.0; // set constant for gravity
 
@@ -53,3 +54,17 @@ void Ball::setVelocity(double vx, double vy)
     this->vx = vx;
     this->vy = vy;
 }
+
+bool Ball::ballIsColliding(const Ball &otherBall) const
+{
+    double dx = x - otherBall.x;
+    double dy = y - otherBall.y;
+    double dSquared = dx * dx + dy * dy;
+    double radiusSum = radius + otherBall.radius;
+
+    return dSquared <= radiusSum * radiusSum;
+}
+
+// void Ball::resolveCollision(Ball &otherBall){
+
+// }

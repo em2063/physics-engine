@@ -52,6 +52,21 @@ int main(int argc, char *argv[])
             ball.renderBall(engine.getRenderer());
         }
 
+        for (size_t i = 0; i < balls.size(); ++i)
+        {
+            for (size_t j = i + 1; j < balls.size(); ++j)
+            {
+                if (balls[i].ballIsColliding(balls[j]))
+                {
+                    std::cout << "Ball: " << i << "and Ball: " << j << " are colliding" << std::endl;
+                }
+            }
+
+            balls[i].updatePosition(deltaT);
+            // balls[i].renderBall(engine.getRenderer());
+        }
+
+        std::cout << "Hello" << std::endl;
         engine.update();
     }
 

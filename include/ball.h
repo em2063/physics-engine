@@ -8,10 +8,14 @@ class Ball
 public:
     Ball(int x, int y, int radius, int r, int g, int b, int a);
 
-    void renderBall(SDL_Renderer *renderer) const; // render the ball
-    void updatePosition(double deltaT);            // update the ball position within the container
+    void renderBall(SDL_Renderer *renderer) const; // render the ball onto the screen
+    void updatePosition(double deltaT);            // update the ball position within the container (from physical effects such as gravity)
 
     void setVelocity(double vx, double vy); // set the balls initial velocity
+
+    // Functions to allow collisions between balls to be possible
+    bool ballIsColliding(const Ball &otherBall) const; // Used to detect whether two balls have collided (basic solution to check whether the circles have intersected)
+    // void resolveCollision(Ball &otherBall);
 
 private:
     int x, y;       // 2D position of the ball
