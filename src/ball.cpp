@@ -1,5 +1,7 @@
 #include "ball.h"
 #include <cmath>
+#include <iostream>
+#include <algorithm>
 
 const double GRAVITY = 650.0; // set constant for gravity
 
@@ -47,6 +49,18 @@ void Ball::updatePosition(double deltaT)
         vy = -vy;   // Reverse velocity
         y = radius; // Clamp position to top
     }
+
+    if (x + radius >= 1200)
+    {
+        x = 1200 - radius;
+        vx = 0;
+    }
+
+    if (x - radius < 0)
+    {
+        x = radius;
+        vx = 0;
+    }
 }
 
 void Ball::setVelocity(double vx, double vy)
@@ -65,6 +79,45 @@ bool Ball::ballIsColliding(const Ball &otherBall) const
     return dSquared <= radiusSum * radiusSum;
 }
 
-// void Ball::resolveCollision(Ball &otherBall){
+void Ball::resolveCollision(Ball &otherBall)
+{
+    double dx = x - otherBall.x;
+    double dy = y - otherBall.y;
+    double distance = std::sqrt(dx * dx + dy * dy);
 
-// }
+    if (distance == 0)
+        return;
+
+    // Calculate the overlap
+    double overlap = (radius + otherBall.radius) - distance;
+
+    if (overlap > 0)
+    {
+        // Normalize the collision vector
+        double nx = dx / distance;
+        double ny = dy / distance;
+
+        // Resolve overlap by moving the balls apart
+        double totalRadius = radius + otherBall.radius;
+        double weight1 = otherBall.radius / totalRadius;
+        double weight2 = radius / totalRadius;
+
+        x += overlap * weight1 * nx;
+        y += overlap * weight1 * ny;
+
+        otherBall.x -= overlap * weight2 * nx;
+        otherBall.y -= overlap * weight2 * ny;
+
+        // Simulate a sliding effect by dampening velocity along the collision normal
+        double velocityAlongNormal = (vx - otherBall.vx) * nx + (vy - otherBall.vy) * ny;
+
+        if (velocityAlongNormal < 0)
+        {
+            vx -= velocityAlongNormal * nx * 0.1;
+            vy -= velocityAlongNormal * ny * 0.5;
+
+            otherBall.vx += velocityAlongNormal * nx * 0.1;
+            otherBall.vy += velocityAlongNormal * ny * 0.5;
+        }
+    }
+}

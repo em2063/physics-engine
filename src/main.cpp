@@ -17,7 +17,6 @@ int main(int argc, char *argv[])
     // start loop for window looping
     while (engine.isWindowRunning())
     {
-
         auto currentTime = std::chrono::high_resolution_clock::now();
         double deltaT = std::chrono::duration<double>(currentTime - lastTime).count();
 
@@ -38,35 +37,26 @@ int main(int argc, char *argv[])
                 SDL_GetMouseState(&mouseX, &mouseY);
 
                 // Create a new ball at the mouse click position
-                balls.emplace_back(mouseX, mouseY, 10, 255, 0, 0, 255); // Red ball, radius 20
+                balls.emplace_back(mouseX, mouseY, 40, 255, 0, 0, 255); // Red ball, radius 20
             }
         }
 
         // Clear window
         engine.clear();
 
-        // Render all balls
-        for (auto &ball : balls)
-        {
-            ball.updatePosition(deltaT);
-            ball.renderBall(engine.getRenderer());
-        }
-
+        // Render balls and check for collisions
         for (size_t i = 0; i < balls.size(); ++i)
         {
             for (size_t j = i + 1; j < balls.size(); ++j)
             {
                 if (balls[i].ballIsColliding(balls[j]))
                 {
-                    std::cout << "Ball: " << i << "and Ball: " << j << " are colliding" << std::endl;
+                    balls[i].resolveCollision(balls[j]);
                 }
             }
-
             balls[i].updatePosition(deltaT);
-            // balls[i].renderBall(engine.getRenderer());
+            balls[i].renderBall(engine.getRenderer());
         }
-
-        std::cout << "Hello" << std::endl;
         engine.update();
     }
 

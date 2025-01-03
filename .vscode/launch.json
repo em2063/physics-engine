@@ -16,7 +16,7 @@
                     "value": "C:/Users/ethan/Desktop/Projects/physics-engine/SDL2/bin;${env:PATH}" 
                 }
             ],
-            "externalConsole": true, 
+            "externalConsole": false, 
             "MIMode": "gdb", 
             "miDebuggerPath": "C:/mingw64/bin/gdb.exe",
             "setupCommands": [

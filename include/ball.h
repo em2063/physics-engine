@@ -15,7 +15,7 @@ public:
 
     // Functions to allow collisions between balls to be possible
     bool ballIsColliding(const Ball &otherBall) const; // Used to detect whether two balls have collided (basic solution to check whether the circles have intersected)
-    // void resolveCollision(Ball &otherBall);
+    void resolveCollision(Ball &otherBall);
 
 private:
     int x, y;       // 2D position of the ball
