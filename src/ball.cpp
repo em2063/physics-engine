@@ -41,6 +41,14 @@ void Ball::updatePosition(double deltaT)
     {
         y = 600 - radius; // Clamp position to the bottom
         vy = 0;
+
+        const double groundFriction = 0.8; // Forces balls to reduce horizontal velocity
+        vx *= groundFriction;
+
+        if (std::abs(vx) < 1.0)
+        {
+            vx = 0;
+        }
     }
 
     // Collision detection for top boundary (optional, to prevent unrealistic behavior)
@@ -110,6 +118,9 @@ void Ball::resolveCollision(Ball &otherBall)
 
         // Simulate a sliding effect by dampening velocity along the collision normal
         double velocityAlongNormal = (vx - otherBall.vx) * nx + (vy - otherBall.vy) * ny;
+
+        const double collisionFriction = 0.8; // Friction exterted on balls once they collide with one another
+        velocityAlongNormal *= collisionFriction;
 
         if (velocityAlongNormal < 0)
         {
