@@ -3,6 +3,7 @@
 #include <engine.h>
 #include <ball.h>
 #include <ui.h>
+#include <rigidBody.h>
 #include <vector>
 #include <chrono>
 #include <iostream>
@@ -13,7 +14,8 @@ int main(int argc, char *argv[])
 {
     // Init new engine window
     Engine engine("Physics Engine", 1200, 600);
-    std::vector<Ball> balls; // init vector to hold balls in
+    std::vector<Ball> balls;          // init vector to hold balls in
+    std::vector<RigidBody> bodyParts; // init vector to hold body parts in
 
     auto lastTime = std::chrono::high_resolution_clock::now();
 
@@ -39,15 +41,16 @@ int main(int argc, char *argv[])
                 currentMode = getMode(currentMode); // Get current state of what mode the engine is in
 
                 // Handle behaviour if the toggle is set to BALLS
-                if (currentMode == BALLS && event.type == SDL_MOUSEBUTTONDOWN)
+                if (currentMode == MAIN_MODE && event.type == SDL_MOUSEBUTTONDOWN)
                 {
                     int mouseX, mouseY;
                     SDL_GetMouseState(&mouseX, &mouseY);
                     balls.emplace_back(mouseX, mouseY, 20, 255, 0, 0, 255);
                 }
-                else if (currentMode == PARTICLES && event.type == SDL_MOUSEBUTTONDOWN)
+                else if (currentMode == SECOND_MODE && event.type == SDL_MOUSEBUTTONDOWN)
                 {
-                    std::cout << "THIS IS PARTICLE MODE - COME BACK LATER.." << std::endl;
+                    bodyParts.emplace_back(400, 200, 20, 20, 5.0);
+                    bodyParts.emplace_back(400, 200, 20, 20, 5.0);
                 }
             }
         }
@@ -56,6 +59,12 @@ int main(int argc, char *argv[])
         engine.clear();
 
         renderToggleButton(engine.getRenderer(), currentMode);
+
+        for (auto &part : bodyParts)
+        {
+            part.update(deltaT);
+            part.render(engine.getRenderer());
+        }
 
         // TODO - IMPROVE ALGORITHM FROM BRUTE FORCE
         // Render balls and check for collisions (iterating through the entire vector)

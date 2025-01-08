@@ -8,8 +8,11 @@
 enum Mode
 {
     BALLS,
-    PARTICLES
+    MANNEQUIN
 };
+
+static const Mode MAIN_MODE = BALLS;
+static const Mode SECOND_MODE = MANNEQUIN;
 
 void renderToggleButton(SDL_Renderer *renderer, Mode mode);
 Mode getMode(Mode currentMode);

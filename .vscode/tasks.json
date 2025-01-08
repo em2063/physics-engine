@@ -11,6 +11,7 @@
                 "C:/Users/ethan/Desktop/Projects/physics-engine/src/engine.cpp",
                 "C:/Users/ethan/Desktop/Projects/physics-engine/src/ball.cpp",
                 "C:/Users/ethan/Desktop/Projects/physics-engine/src/ui.cpp",
+                "C:/Users/ethan/Desktop/Projects/physics-engine/src/rigidBody.cpp",
                 "-o", "C:/Users/ethan/Desktop/Projects/physics-engine/SDL2/bin/main.exe",
                 "-IC:/Users/ethan/Desktop/Projects/physics-engine/SDL2/include/SDL2",
                 "-IC:/Users/ethan/Desktop/Projects/physics-engine/include",
