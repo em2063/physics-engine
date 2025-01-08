@@ -12,5 +12,6 @@ enum Mode
 };
 
 void renderToggleButton(SDL_Renderer *renderer, Mode mode);
+Mode getMode(Mode currentMode);
 
 #endif

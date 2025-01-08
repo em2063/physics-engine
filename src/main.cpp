@@ -9,20 +9,6 @@
 
 Mode currentMode = BALLS;
 
-void renderToggleButton(SDL_Renderer *renderer, Mode mode)
-{
-    if (currentMode == BALLS)
-    {
-        SDL_SetRenderDrawColor(renderer, 200, 200, 200, 255); // Light gray for button
-    }
-    else if (currentMode == PARTICLES)
-    {
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 0);
-    }
-    SDL_Rect button = {10, 10, 200, 50};
-    SDL_RenderFillRect(renderer, &button);
-}
-
 int main(int argc, char *argv[])
 {
     // Init new engine window
@@ -39,7 +25,6 @@ int main(int argc, char *argv[])
 
         lastTime = currentTime;
 
-        SDL_Rect toggleMode = {10, 20, 200, 50}; // toggle button for selecting modes (ball engine, particle emitter etc)
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
@@ -51,14 +36,8 @@ int main(int argc, char *argv[])
             // Check for mouse click
             if (event.type == SDL_MOUSEBUTTONDOWN)
             {
-                int mouseX, mouseY;
-                SDL_GetMouseState(&mouseX, &mouseY);
+                currentMode = getMode(currentMode); // Get current state of what mode the engine is in
 
-                // Check if the toggle button was pressed for changing the mode
-                if (mouseX >= toggleMode.x && mouseX <= toggleMode.x + toggleMode.w && mouseY >= toggleMode.y && mouseY <= toggleMode.y + toggleMode.h)
-                {
-                    currentMode = (currentMode == BALLS) ? PARTICLES : BALLS;
-                }
                 // Handle behaviour if the toggle is set to BALLS
                 if (currentMode == BALLS && event.type == SDL_MOUSEBUTTONDOWN)
                 {
